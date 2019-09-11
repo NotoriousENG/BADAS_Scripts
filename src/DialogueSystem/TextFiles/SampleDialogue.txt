@@ -1,0 +1,36 @@
+[NAME=???]Hello!
+
+Welcome to the world of Game Development!
+
+[NAME=Michael]My name is Michael, and this is NPC Dialogue.
+
+A pretty easy way to handle linear dialogue is with text files.
+
+Here you can edit what is being said without having to edit every line in Unity.
+
+Trust me, it can get annoying very quickly having to click on textboxes and such.
+
+Of course, if you wanted nonlinear dialogue, you would need a way to implement player choice, a way to record it, and a way to navigate a file or two.
+
+EndQueue
+
+** Multiple choice ** (Needs work)
+
+But you'd probably still want everything in the same file right?
+
+[CHOICE=Y] YES
+[CHOICE=N] NO
+
+{Y} Well you're in luck, that's what we're doing here!
+
+{N} Ah, well you can really do a number of things, but I'll tell you my way.
+
+You need 2 things really.
+
+1) You need a way to mark choices.
+2) You need a way to mark the next line of dialogue to say.
+
+With these you could probably make a system to handle elementary branching dialouge.
+
+Too much branching dialogue could be a headache for this system, if you think this is necessary for your game, you'll definitely want to develop a more modular system..
+
