@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum State {Idle, Walking, Jumping}
-
 [System.Serializable]
 public class Boundary
 {
@@ -14,18 +12,20 @@ public class Move2D : MonoBehaviour
 
     public float speed = 5; // the speed of the player character
     public float jumpAccelleration = 7; // the accelleration of the jump (sets Jump Force)
-    private float tempAccelleration = 0; // the total accelleration
+    public float tempAccelleration = 0; // the total accelleration
     private float gAccelleration = 9.81f; // the pull of gravity
-    private bool isGrounded = true; // represents if the player on the ground
     private float moveHorizontal = 0; // the horizontal component of directional input
     private float moveVertical = 0; // the vertical component of directional input
-    private State state = State.Idle; // the state for the player character
-    /* The states available to the player character */
-    private bool canJump = true; 
-    private bool canWalk = true;
-    private bool canIdle = false;
+    
+    private StateController stateController;
+    public bool isMoving = false; // represents if there is directional input
+    public bool isJumping = false; // represents the jump key being hit
+    public bool isGrounded = true; // represents if the player on the ground
 
     private void Start() {
+        stateController = gameObject.AddComponent<StateController>();
+        stateController.state = State.Idle;
+        stateController.isPlayer = true;
         PlayerController();
     }
 
@@ -33,6 +33,7 @@ public class Move2D : MonoBehaviour
     void FixedUpdate()
     {
         PlayerController();
+        stateController.Handle(isMoving,isJumping);
     }
 
         void PlayerController(){
@@ -54,6 +55,23 @@ public class Move2D : MonoBehaviour
          */
         moveHorizontal = Input.GetAxis("Horizontal"); // Represents moving a joystick left/right
         moveVertical = Input.GetAxis("Vertical"); // Represents moving a joystick up/down
+        if (moveVertical == 0 && moveHorizontal == 0)
+        {
+            isMoving = false;
+        }
+        else 
+        {
+            isMoving = true;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            isJumping = true;
+        }
+        else
+        {
+            isJumping = false;
+        }
         States();
     }
 
@@ -65,7 +83,7 @@ public class Move2D : MonoBehaviour
         */
 
          /* **STATES** */
-        switch  (state)
+        switch  (stateController.state)
         {
             case State.Idle:
             {
@@ -83,7 +101,6 @@ public class Move2D : MonoBehaviour
                 break;
             }
         }
-        StateTransiton();
     }
 
     void PlayerMovement(){
@@ -115,7 +132,7 @@ public class Move2D : MonoBehaviour
         if (moveVertical > 0)
         {
             GetComponent<Animator>().SetBool("WalkingUp", true);
-            Debug.Log("Walking Up");
+            // Debug.Log("Walking Up");
         }
         else
         {
@@ -124,7 +141,7 @@ public class Move2D : MonoBehaviour
         if (moveHorizontal < 0)
         {
             GetComponent<Animator>().SetBool("WalkingLeft", true); 
-            Debug.Log("Walking Left");           
+            // Debug.Log("Walking Left");           
         }
         else
         {
@@ -152,7 +169,7 @@ public class Move2D : MonoBehaviour
     {
         if (isGrounded)
         {
-            ToIdle();
+            stateController.ToIdle();
         }
         else
         {
@@ -165,69 +182,5 @@ public class Move2D : MonoBehaviour
             }
         }
         PlayerMovement();
-    }
-
-    void StateTransiton(){
-
-        /* ENTER IDLE STATE */
-        if (canIdle && (moveHorizontal == 0 && moveVertical == 0))
-        {
-            ToIdle();
-        }
-        /* ENTER JUMPING STATE */
-        else if (canJump && Input.GetButton("Jump"))
-        {
-            ToJumping();
-        }
-        /* ENTER WALKING STATE */
-        else if (canWalk && (moveHorizontal != 0 || moveVertical != 0))
-        {
-            ToWalking();
-        }
-    }
-
-    void ToIdle()
-    {
-        state = State.Idle;
-        Debug.Log("Entered Idle State");
-
-        /* STATES WHICH THE IDLE STATE CAN GO TO IMMEDIATELY */
-        canJump = true;
-        canWalk = true;
-        canIdle = false;
-    }
-
-    void ToJumping()
-    {
-        state = State.Jumping;
-        tempAccelleration = jumpAccelleration; // tempAccelleration = positive float (Jumping)
-        isGrounded = false;
-        Debug.Log("Entered Jumping State");
-
-        /* STATES WHICH THE JUMPING STATE CAN GO TO IMMEDIATELY */
-        canJump = false;
-        canIdle = false;
-        canWalk = false;
-    }
-
-    void ToWalking()
-    {
-        state = State.Walking;
-        Debug.Log("Entered Walking State");
-
-        /* STATES WHICH THE WALKING STATE CAN GO TO IMMEDIATELY */
-        canIdle = true;
-        canJump = true;
-        canWalk = false;
-    }
-
-    /// Sent each frame where another object is within a trigger collider
-    /// attached to this object (2D physics only).
-    void OnTriggerStay2D(Collider2D other)
-    {
-        if(other.tag.Equals("DeathPit") && state != State.Jumping)
-        {
-            Debug.Log("YOU DIED");
-        }
     }
 }
