@@ -39,5 +39,7 @@ A Dialogue Trigger can be an NPC, a sign, an event, anything really. For right n
 Dialogue Files can be written with your favorite text editor. I used .txt but you can use any of these: https://docs.unity3d.com/Manual/class-TextAsset.html. I like to denote a new dialogue portion with an extra newline. Additionally, you can set the name for a line of dialogue by writing [NAME=TheNameYouWant] at the beginning of a line of text. This name will remain until you finish the dialogue or change it.
 
 # Demos
+## State Controller Using the Unity Animator
+https://www.youtube.com/watch?v=5trXpi3am-U
 ## Simple Dialogue
 https://youtu.be/G9jFkq2zQUM
