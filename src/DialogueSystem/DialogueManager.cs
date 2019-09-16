@@ -19,7 +19,7 @@ public class DialogueManager : MonoBehaviour
     public Text NameText; // the text body of the name you want to display
     public bool freezePlayerOnDialogue = true;
 
-    private bool isOpen; // represents if the dialogue box is open or closed
+    // private bool isOpen; // represents if the dialogue box is open or closed
 
     private Queue<string> inputStream = new Queue<string>(); // stores dialogue
     private PlayerAnimController animController;
@@ -49,7 +49,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         CanvasBox.SetActive(true); // open the dialogue box
-        isOpen = true;
+        // isOpen = true;
         inputStream = dialogue; // store the dialogue from dialogue trigger
         PrintDialogue(); // Prints out the first line of dialogue
     }
@@ -85,7 +85,7 @@ public class DialogueManager : MonoBehaviour
         NameText.text = "";
         inputStream.Clear();
         CanvasBox.SetActive(false);
-        isOpen = false;
+        // isOpen = false;
         if (freezePlayerOnDialogue)
         {
             EnablePlayerController();
