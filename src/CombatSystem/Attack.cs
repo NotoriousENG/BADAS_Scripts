@@ -8,25 +8,23 @@ public class Attack : MonoBehaviour
     private float radius;
     private float damage;
 
-    private void Update() 
+    public void SetWeapon(Transform attacker)
     {
-        SetWeapon();
-    }
-
-    void SetWeapon()
-    {
-        center = new Vector2(transform.position.x, transform.position.y);
+        center = new Vector2(attacker.position.x, attacker.position.y);
         radius = 3f;
         damage = 1f;
     }
 
-    void Strike()
+    public void Strike()
     {
         Collider2D[] hits =  Physics2D.OverlapCircleAll(center, radius);
         foreach (Collider2D hit in hits)
         {
             Health health = hit.gameObject.GetComponent<Health>();
-            health.damageHealth(damage);
+            if (health != null) // if the object has health
+            {
+                health.damageHealth(damage);
+            }
         }
     }
 }

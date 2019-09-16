@@ -17,18 +17,37 @@ public class DialogueManager : MonoBehaviour
     public GameObject CanvasBox; // your fancy canvas box that holds your text objects
     public Text TextBox; // the text body
     public Text NameText; // the text body of the name you want to display
+    public bool freezePlayerOnDialogue = true;
 
     private bool isOpen; // represents if the dialogue box is open or closed
 
     private Queue<string> inputStream = new Queue<string>(); // stores dialogue
+    private PlayerAnimController animController;
 
     private void Start()
     {
         CanvasBox.SetActive(false); // close the dialogue box on play
     }
 
+    private void DisablePlayerController()
+    {
+        animController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimController>();
+        animController.ForceIdle();
+        animController.enabled = false;
+    }
+
+    private void EnablePlayerController()
+    {
+        animController.enabled = true;
+    }
+
     public void StartDialogue(Queue<string> dialogue)
     {
+        if (freezePlayerOnDialogue)
+        {
+            DisablePlayerController();
+        }
+
         CanvasBox.SetActive(true); // open the dialogue box
         isOpen = true;
         inputStream = dialogue; // store the dialogue from dialogue trigger
@@ -67,6 +86,10 @@ public class DialogueManager : MonoBehaviour
         inputStream.Clear();
         CanvasBox.SetActive(false);
         isOpen = false;
+        if (freezePlayerOnDialogue)
+        {
+            EnablePlayerController();
+        }
     }
 
 }

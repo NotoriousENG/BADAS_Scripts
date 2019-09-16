@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// purpose: allows for setting behavior for the jumping state
+// must be attatche to an animator state : https://www.youtube.com/watch?v=dYi-i83sq5g&t=272s
 public class PlayerJumpBehaviour : StateMachineBehaviour
 {
     private Transform playerTransform;
@@ -24,10 +26,10 @@ public class PlayerJumpBehaviour : StateMachineBehaviour
     {
         if (isGrounded)
         {
-            animator.SetBool("isJumping", false);
+            animator.SetBool("isJumping", false); // tells the animator that we can go to a different state (We are done jumping)
         }
 
-        else
+        else // only happens while we are jumping
         {
             playerTransform.position -= new Vector3(0,0,tempAccelleration * Time.deltaTime);
             playerTransform.position = animator.gameObject.transform.position;
@@ -39,8 +41,8 @@ public class PlayerJumpBehaviour : StateMachineBehaviour
                 playerTransform.position = new Vector3 (playerTransform.position.x,playerTransform.position.y,Mathf.Abs(playerTransform.position.z - playerTransform.position.z));
                 isGrounded = true;
             }
-            
-            DirectionalMovement(movementSpeed);
+
+            DirectionalMovement(movementSpeed); // totally copied from Player Walk, but maybe you will want to set values differently below
         }
     }
 
