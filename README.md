@@ -24,6 +24,15 @@ $ cd PATH_TO_UNITY_PROJECT_FOLDER/Assets/Scripts/BADAS_Scripts
 $ git pull
 ```
 
+<<<<<<< HEAD
+=======
+# Tutorials
+## PlayerAnimController
+https://www.youtube.com/watch?v=CnN7L-5ygoc
+## Dialogue System
+https://www.youtube.com/watch?v=SuuO_qMiNCw&feature=youtu.be
+
+>>>>>>> b9942a87378eb7e2729c668dcb01141e4e970bcf
 # Usage
 ## PlayerAnimController
 Attatch to player, handles inputs and setting animator properties. A replacement for the former Move2D script.
