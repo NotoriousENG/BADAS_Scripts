@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+<<<<<<< HEAD
 public enum WeaponClass
 {
     Swing, Shoot, Spin
@@ -40,6 +41,35 @@ public class Weapon : MonoBehaviour
         {
             Health enemyHealth = other.gameObject.GetComponent<Health>();
             enemyHealth.damageHealth(Power);
+=======
+public enum WeaponClass { Sword, Axe, Lance }
+public class Weapon : MonoBehaviour
+{
+    public string weaponName = "none";
+    public WeaponClass weaponClass = WeaponClass.Sword;
+    public float power = 1f;
+    public float speed = 1f;
+
+    void setClassStats()
+    {
+        switch (weaponClass)
+        {
+            case WeaponClass.Sword:
+            {
+                speed = 2f;
+                break;
+            }
+            case WeaponClass.Axe:
+            {
+                speed = 1f;
+                break;
+            }
+            case WeaponClass.Lance:
+            {
+                speed = 3f;
+                break;
+            }
+>>>>>>> ba5f1e9873c8ceaab2407f84c9cb4de1a7a3f9cf
         }
     }
 }
