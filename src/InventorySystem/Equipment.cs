@@ -5,7 +5,8 @@ using UnityEngine;
 public class Equipment : MonoBehaviour
 {
     private Inventory inventory;
-    private Weapon equippedWeapon;
+    public string equipedName = "none";
+    [HideInInspector]public Weapon equippedWeapon;
     private bool isPlayer, navigateForward, navigateBack;
 
     private void Start() 
@@ -22,6 +23,10 @@ public class Equipment : MonoBehaviour
         {
             navigateForward = Input.GetKeyDown("s");
             navigateBack = Input.GetKeyDown("a");
+            if (equippedWeapon != null)
+            {
+                equipedName = equippedWeapon.weaponName;
+            }
         }
 
 
