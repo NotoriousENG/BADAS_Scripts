@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+ #if UNITY_EDITOR
+ using UnityEditor;
+ #endif
+
 public enum WeaponClass
 {
     Swing, Shoot, Spin
@@ -27,7 +31,12 @@ public class Weapon : MonoBehaviour
     // public float Range; // {get; set;}
     public float Speed; // {get;set;}
     public float Power; // {get;set;}
-    public bool IsMultiHitter; //{get;set;}
+    public bool isProjectileWeapon;
+
+    [HideInInspector] // HideInInspector makes sure the default inspector won't show these fields.
+    public GameObject Projectile;
+     
+    // public bool IsMultiHitter; //{get;set;}
     public Vector3 HandleOffset;
     // weapon types : swing/stab/projectile
 
@@ -66,3 +75,21 @@ public class Weapon : MonoBehaviour
         }
     }
 }
+
+ #if UNITY_EDITOR
+ [CustomEditor(typeof(Weapon))] // allow the player to add a projectile if this is a projectile weapon
+ public class RandomScript_Editor : Editor
+ {
+     public override void OnInspectorGUI()
+     {
+         DrawDefaultInspector(); // for other non-HideInInspector fields
+ 
+         Weapon script = (Weapon)target;
+
+         if (script.isProjectileWeapon) // if bool is true, show other fields
+         {
+             script.Projectile = EditorGUILayout.ObjectField("Projectile", script.Projectile, typeof(GameObject), true) as GameObject;
+         }
+     }
+ }
+ #endif
