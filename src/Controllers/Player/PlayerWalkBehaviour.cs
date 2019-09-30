@@ -32,6 +32,12 @@ public class PlayerWalkBehaviour : StateMachineBehaviour
          */
         Vector3 inputVector = new Vector3( (Input.GetAxis("Horizontal")) , (Input.GetAxis("Vertical")), 0).normalized ;
 
+        if (inputVector != new Vector3 (0,0,0)) // while we are still moving store the inputs for later use to get facing behaviour
+        {
+            animator.SetFloat("lastHorizontal", inputVector.x);
+            animator.SetFloat("lastVertical", inputVector.y);
+        }
+
         playerTransform.Translate(inputVector * scaledSpeed); // moves the transform in the direction set above
     }
 

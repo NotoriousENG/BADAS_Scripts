@@ -65,10 +65,7 @@ public class DialogueTrigger : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-<<<<<<< HEAD
-=======
         Debug.Log(other.name);
->>>>>>> b9942a87378eb7e2729c668dcb01141e4e970bcf
         if (other.gameObject.tag == "Player" && Input.GetButton("Jump") && nextTime < Time.timeSinceLevelLoad)
         {
             nextTime = Time.timeSinceLevelLoad + waitTime;

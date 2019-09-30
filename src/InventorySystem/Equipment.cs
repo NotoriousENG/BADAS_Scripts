@@ -8,21 +8,24 @@ public class Equipment : MonoBehaviour
     private Inventory inventory;
     public GameObject equippedWeapon;
     private GameObject wep;
+    private Animator animator;
 
-    private bool isPlayer, navigateForward, navigateBack;
+    // private bool isPlayer, navigateForward, navigateBack;
 
     private void Start() 
     {
+        animator = gameObject.GetComponent<Animator>();
         inventory = gameObject.GetComponent<Inventory>(); // can access an inventory
         EquipWeapon(1);
-        if (gameObject.tag == "Player")
+        /* if (gameObject.tag == "Player")
         {
             isPlayer = true;
-        }   
+        }    */
     }
 
-    private void Update() {
-        if (isPlayer)
+/*     private void Update() {
+
+        if (isPlayer && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             navigateForward = Input.GetKeyDown("1");
             navigateBack = Input.GetKeyDown("2");
@@ -37,8 +40,8 @@ public class Equipment : MonoBehaviour
         {
             EquipWeapon(1);
         }
-    }
-    void EquipWeapon(int step)
+    } */
+    public void EquipWeapon(int step)
     {
         int capacity = inventory.Weapons.Capacity;
         int index = inventory.Weapons.IndexOf(equippedWeapon); // get index
