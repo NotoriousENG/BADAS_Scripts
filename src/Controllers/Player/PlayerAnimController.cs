@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +16,6 @@ public class PlayerAnimController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        gameObject.AddComponent<Attack>();
     }
 
     // Update is called once per frame

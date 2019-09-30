@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class PlayerAttackBehavior : StateMachineBehaviour
 {
-    private Attack attack;
     private AudioSource audio;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        attack = animator.gameObject.GetComponent<Attack>();
         audio = animator.gameObject.GetComponent<AudioSource>();
         audio.Play(); // play a sound to signify attacks
-        // setup attack
-        attack.SetWeapon(animator.gameObject.transform); // pass in just the player transform for now, more detail coming soon
-        attack.Strike(); // deal damage
+        
         
     }
 

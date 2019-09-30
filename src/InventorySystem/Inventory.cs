@@ -4,31 +4,10 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [HideInInspector]public List<Weapon> weapons;
-    private Equipment equipment;
+    public List<GameObject> Weapons;
 
-    private void Start() 
+    void AddWeapon(GameObject weapon)
     {
-        equipment = gameObject.GetComponent<Equipment>();
-    }
-
-    private void Update() 
-    {
-        if(Input.GetKeyDown("q"))
-        {
-            Weapon item = new Weapon();
-            item.weaponName = "Sword";
-            item.weaponClass = WeaponClass.Sword;
-            item.power = 1f;
-
-            AddWeapon(item);
-            equipment.equippedWeapon = item;
-            equipment.equipedName = item.weaponName;
-            Debug.Log(equipment.equippedWeapon.weaponName);
-        }
-    }
-    void AddWeapon(Weapon item)
-    {
-        weapons.Add(item);
+        Weapons.Add(weapon);
     }
 }

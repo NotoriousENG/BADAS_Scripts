@@ -1,32 +1,34 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Equipment : MonoBehaviour
 {
     private Inventory inventory;
-    public string equipedName = "none";
-    [HideInInspector]public Weapon equippedWeapon;
-    private bool isPlayer, navigateForward, navigateBack;
+    public GameObject equippedWeapon;
+    private GameObject wep;
+    private Animator animator;
+
+    // private bool isPlayer, navigateForward, navigateBack;
 
     private void Start() 
     {
+        animator = gameObject.GetComponent<Animator>();
         inventory = gameObject.GetComponent<Inventory>(); // can access an inventory
-        if (gameObject.tag == "Player")
+        EquipWeapon(1);
+        /* if (gameObject.tag == "Player")
         {
             isPlayer = true;
-        }   
+        }    */
     }
 
-    private void Update() {
-        if (isPlayer)
+/*     private void Update() {
+
+        if (isPlayer && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
-            navigateForward = Input.GetKeyDown("s");
-            navigateBack = Input.GetKeyDown("a");
-            if (equippedWeapon != null)
-            {
-                equipedName = equippedWeapon.weaponName;
-            }
+            navigateForward = Input.GetKeyDown("1");
+            navigateBack = Input.GetKeyDown("2");
         }
 
 
@@ -38,11 +40,13 @@ public class Equipment : MonoBehaviour
         {
             EquipWeapon(1);
         }
-    }
-    void EquipWeapon(int step)
+    } */
+    public void EquipWeapon(int step)
     {
-        int capacity = inventory.weapons.Capacity;
-        int index = inventory.weapons.IndexOf(equippedWeapon);
+        int capacity = inventory.Weapons.Capacity;
+        int index = inventory.Weapons.IndexOf(equippedWeapon); // get index
+        Debug.Log("Index: " + index);
+
         /*  if we are on item 9 going to item 10 (nonexistent) 
         in a 10 capacity list (0...9), loop back to start */
         if(index + step >= capacity) 
@@ -58,6 +62,17 @@ public class Equipment : MonoBehaviour
         {
             index = index + step;
         }
-        equippedWeapon = inventory.weapons[index];
+
+        if (equippedWeapon != null)
+        {
+            Destroy(wep); // destroy the weapon
+        }
+
+        equippedWeapon = inventory.Weapons[index]; // set the equipped weapon
+        wep = Instantiate(equippedWeapon); // make a copy of the weapon for this gameObject 
+
+        wep.transform.SetParent(gameObject.transform.Find("Hand")); // parent the weapon to this gameObject's transform
+        wep.transform.localPosition = Vector3.zero + wep.GetComponent<Weapon>().HandleOffset;
+        wep.SetActive(true);
     }
 }
