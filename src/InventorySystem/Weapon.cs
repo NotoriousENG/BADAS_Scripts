@@ -74,6 +74,14 @@ public class Weapon : MonoBehaviour
             enemyHealth.damageHealth(Power);
         }
     }
+    private void OnTriggerStay2D(Collider2D other) 
+    {
+        if (other.tag.Equals("Enemy") && Input.GetButtonDown("Fire1"))
+        {
+            Health enemyHealth = other.gameObject.GetComponent<Health>();
+            enemyHealth.damageHealth(Power);
+        }
+    }
 }
 
  #if UNITY_EDITOR
