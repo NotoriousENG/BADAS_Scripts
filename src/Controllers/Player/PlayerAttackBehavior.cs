@@ -5,27 +5,29 @@ using UnityEngine;
 public class PlayerAttackBehavior : StateMachineBehaviour
 {
     private AudioSource audio;
+    private float defaultSpeed;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         audio = animator.gameObject.GetComponent<AudioSource>();
         audio.Play(); // play a sound to signify attacks
-        getAttackAnimator(animator).SetBool("isPlaying", true);
+        Weapon weapon = getEquipedWeapon(animator);
+        defaultSpeed = animator.speed;
+        animator.speed = weapon.Speed; // change attack speed to weapon speed
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("isAttacking", false); // set to false to exit this state 
-        getAttackAnimator(animator).SetBool("isPlaying", false);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        getAttackAnimator(animator).SetBool("isPlaying", false);
+        animator.speed = defaultSpeed; // return animator speed to default
     }
 
-    private Animator getAttackAnimator(Animator animator)
+    private Weapon getEquipedWeapon(Animator animator)
     {
         Transform hand = animator.gameObject.transform.Find("Hand");
         for (int i = 0; i < hand.childCount; i++)
@@ -34,8 +36,8 @@ public class PlayerAttackBehavior : StateMachineBehaviour
             GameObject child = hand.GetChild(i).gameObject;
             if (child.tag.Equals("Weapon"))
             {
-                Animator childAnim = child.GetComponent<Animator>();
-                return childAnim;
+                Weapon wep = child.GetComponent<Weapon>();
+                return wep;
             }
         }
         return null;

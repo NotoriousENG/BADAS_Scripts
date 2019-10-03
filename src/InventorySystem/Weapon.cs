@@ -12,33 +12,15 @@ public enum WeaponClass
 }
 public class Weapon : MonoBehaviour
 {
-    // If you want do some OOP, use this
-    /* // default constructor
-    public Weapon(){}
+    public float Speed = 1; // {get;set;}
+    public float Power = 1; // {get;set;}
+    public Vector3 HandleOffset;
+    // weapon types : swing/stab/projectile
 
-    // constuctor
-    public Weapon(string weaponName, WeaponClass _weaponClass, float range, float speed, float power, bool isMultiHitter)
-    {
-        WeaponName = weaponName;
-        weaponClass = _weaponClass;
-        Range = range;
-        Speed = speed;
-        Power = power;
-        IsMultiHitter = isMultiHitter;
-    }
-    // properties */
-    // public WeaponClass weaponClass; // {get; set;}
-    // public float Range; // {get; set;}
-    public float Speed; // {get;set;}
-    public float Power; // {get;set;}
     public bool isProjectileWeapon;
 
     [HideInInspector] // HideInInspector makes sure the default inspector won't show these fields.
     public GameObject Projectile;
-     
-    // public bool IsMultiHitter; //{get;set;}
-    public Vector3 HandleOffset;
-    // weapon types : swing/stab/projectile
 
     private SpriteRenderer spriteRenderer; 
     private Animator parentAnimator;
