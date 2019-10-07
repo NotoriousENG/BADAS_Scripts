@@ -24,15 +24,14 @@ $ cd PATH_TO_UNITY_PROJECT_FOLDER/Assets/Scripts/BADAS_Scripts
 $ git pull
 ```
 
-<<<<<<< HEAD
-=======
 # Tutorials
 ## PlayerAnimController
 https://www.youtube.com/watch?v=CnN7L-5ygoc
 ## Dialogue System
 https://www.youtube.com/watch?v=SuuO_qMiNCw&feature=youtu.be
+## Weapon System
+**Coming Soon**
 
->>>>>>> b9942a87378eb7e2729c668dcb01141e4e970bcf
 # Usage
 ## PlayerAnimController
 Attatch to player, handles inputs and setting animator properties. A replacement for the former Move2D script.
@@ -46,9 +45,5 @@ Needs to be an object in a scene, I recommend adding it to an Empty in the Canva
 A Dialogue Trigger can be an NPC, a sign, an event, anything really. For right now we are using Trigger2D Collision to trigger dialogue. Add the Dialogue Trigger to your NPC (or etc.) and try loading in the sample dialogue or perhaps write your own.
 ## Writing Dialogue Files
 Dialogue Files can be written with your favorite text editor. I used .txt but you can use any of these: https://docs.unity3d.com/Manual/class-TextAsset.html. I like to denote a new dialogue portion with an extra newline. Additionally, you can set the name for a line of dialogue by writing [NAME=TheNameYouWant] at the beginning of a line of text. This name will remain until you finish the dialogue or change it.
-
-# Demos
-## State Controller Using the Unity Animator
-https://www.youtube.com/watch?v=5trXpi3am-U
-## Simple Dialogue
-https://youtu.be/G9jFkq2zQUM
+## Weapons and Projectiles
+**Coming Soon**
