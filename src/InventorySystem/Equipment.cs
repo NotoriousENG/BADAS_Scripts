@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Equipment : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Equipment : MonoBehaviour
     public GameObject equippedWeapon;
     private GameObject wep;
     private Animator animator;
+    public Image UI_Image;
 
     // private bool isPlayer, navigateForward, navigateBack;
 
@@ -17,30 +19,7 @@ public class Equipment : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         inventory = gameObject.GetComponent<Inventory>(); // can access an inventory
         EquipWeapon(1);
-        /* if (gameObject.tag == "Player")
-        {
-            isPlayer = true;
-        }    */
     }
-
-/*     private void Update() {
-
-        if (isPlayer && !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {
-            navigateForward = Input.GetKeyDown("1");
-            navigateBack = Input.GetKeyDown("2");
-        }
-
-
-        if (navigateBack)
-        {
-            EquipWeapon(-1);
-        }
-        else if (navigateForward)
-        {
-            EquipWeapon(1);
-        }
-    } */
     public void EquipWeapon(int step)
     {
         int capacity = inventory.Weapons.Capacity;
@@ -74,5 +53,6 @@ public class Equipment : MonoBehaviour
         wep.transform.SetParent(gameObject.transform.Find("Hand")); // parent the weapon to this gameObject's transform
         wep.transform.localPosition = Vector3.zero + wep.GetComponent<Weapon>().HandleOffset;
         wep.SetActive(true);
+        UI_Image.sprite = wep.GetComponent<SpriteRenderer>().sprite;
     }
 }

@@ -16,6 +16,7 @@ public class PlayerAnimController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        animator.SetFloat("lastVertical", -1f); // default to facing down
     }
 
     // Update is called once per frame
@@ -27,8 +28,6 @@ public class PlayerAnimController : MonoBehaviour
          * animator state for each directional movement
          * (tutorial) : https://www.youtube.com/watch?v=32VXj5BB7wU
          */
-        animator.SetFloat("moveHorizontal", Input.GetAxis("Horizontal"));
-        animator.SetFloat("moveVertical", Input.GetAxis("Vertical"));
 
         /* 
          * get magnitude of movement 
@@ -56,8 +55,8 @@ public class PlayerAnimController : MonoBehaviour
 
     public void ForceIdle()
     {
-        animator.SetFloat("moveHorizontal", 0);
-        animator.SetFloat("moveVertical", 0);
+        animator.SetFloat("lastHorizontal", 0);
+        animator.SetFloat("lastVertical", 0);
         animator.SetFloat("moveMagnitude", 0);
     }
 }

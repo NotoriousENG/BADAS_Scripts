@@ -56,6 +56,7 @@ public class Weapon : MonoBehaviour
             enemyHealth.damageHealth(Power);
         }
     }
+
     private void OnTriggerStay2D(Collider2D other) 
     {
         if (other.tag.Equals("Enemy") && Input.GetButtonDown("Fire1"))
