@@ -34,6 +34,7 @@ public class PlayerWalkBehaviour : StateMachineBehaviour
 
         if (inputVector != new Vector3 (0,0,0)) // while we are still moving store the inputs for later use to get facing behaviour
         {
+            // changed to lastH and lastV to blend more cleanly to Idle
             animator.SetFloat("lastHorizontal", inputVector.x);
             animator.SetFloat("lastVertical", inputVector.y);
         }

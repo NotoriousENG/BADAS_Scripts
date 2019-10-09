@@ -37,6 +37,12 @@ public class PlayerAttackBehavior : StateMachineBehaviour
 
     private Weapon getEquipedWeapon(Animator animator)
     {
+        /*
+         * Get the weapon from the player's hand
+         * Player
+         *      |-> Hand
+         *          |-> Weapon
+         */
         Transform hand = animator.gameObject.transform.Find("Hand");
         for (int i = 0; i < hand.childCount; i++)
         {

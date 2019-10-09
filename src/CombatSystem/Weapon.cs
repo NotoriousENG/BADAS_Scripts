@@ -39,13 +39,15 @@ public class Weapon : MonoBehaviour
             Animator parentAnimator = transform.parent.parent.gameObject.GetComponent<Animator>();
             Vector2 lastDirs = new Vector2 (parentAnimator.GetFloat("lastHorizontal"), parentAnimator.GetFloat("lastVertical"));
             
+            // we need to put the weapon behind the character when they are facing left or up 
+            // (Assuming your characters are all right handed)
             if (lastDirs.x < 0 || lastDirs.y > 0 && !(lastDirs.y < 0 || lastDirs.x > 0))
             {
-                spriteRenderer.sortingLayerName = "Gameplay";
+                spriteRenderer.sortingLayerName = "BelowCharacters";
             }
             else 
             {
-                spriteRenderer.sortingLayerName = "Foreground";
+                spriteRenderer.sortingLayerName = "AboveCharacters";
             }
         }
     } 
@@ -53,8 +55,8 @@ public class Weapon : MonoBehaviour
     {
         if (other.tag.Equals("Enemy"))
         {
-            Health enemyHealth = other.gameObject.GetComponent<Health>();
-            enemyHealth.damageHealth(Power);
+            Health enemyHealth = other.gameObject.GetComponent<Health>(); // get the health component
+            enemyHealth.damageHealth(Power); // call the damage function inb the health script
         }
     }
 

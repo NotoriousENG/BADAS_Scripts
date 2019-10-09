@@ -10,7 +10,7 @@ public class Equipment : MonoBehaviour
     public GameObject equippedWeapon;
     private GameObject wep;
     private Animator animator;
-    public Image UI_Image;
+    public Image UI_Image; // use to map to a UI element
 
     // private bool isPlayer, navigateForward, navigateBack;
 
@@ -53,6 +53,6 @@ public class Equipment : MonoBehaviour
         wep.transform.SetParent(gameObject.transform.Find("Hand")); // parent the weapon to this gameObject's transform
         wep.transform.localPosition = Vector3.zero + wep.GetComponent<Weapon>().HandleOffset;
         wep.SetActive(true);
-        UI_Image.sprite = wep.GetComponent<SpriteRenderer>().sprite;
+        UI_Image.sprite = wep.GetComponent<SpriteRenderer>().sprite; // change image in UI
     }
 }

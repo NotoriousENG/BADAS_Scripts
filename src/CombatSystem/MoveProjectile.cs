@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class MoveProjectile : MonoBehaviour
 {
-    public Vector3 MoveDir;
-    public float speed = 1;
-    public float Power = 1;
+    public Vector3 MoveDir; // the direction to move towards e.g. (-1,0,0) is left
+    public float speed = 1; // the speed of movement
+    public float Power = 1; // the power of the projectile
     [HideInInspector]
     public GameObject Shooter;
 
@@ -30,10 +30,12 @@ public class MoveProjectile : MonoBehaviour
 
     private void setAnimatorVariables(Animator animator)
     {
+        // used to setup animations 
+        // e.g. facing directions for arrows
         animator.SetFloat("moveX", MoveDir.x);
         animator.SetFloat("moveY", MoveDir.y);
     }
-    private void OnBecameInvisible() 
+    private void OnBecameInvisible() // when the object exits the game and scene camera
     {
        killObj();
     }

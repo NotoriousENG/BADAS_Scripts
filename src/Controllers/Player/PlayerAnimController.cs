@@ -47,7 +47,7 @@ public class PlayerAnimController : MonoBehaviour
             animator.SetBool("isAttacking", true); // set to false in PlayerAttackBehaviour
         }
 
-        SetWeaponAnimatorParameter();
+        SetWeaponAnimatorParameter(); // use this to setup different attack animations
 
         /* 
          * all other functions, movement, jumping, attacking, etc. 
@@ -58,7 +58,18 @@ public class PlayerAnimController : MonoBehaviour
 
     public void SetWeaponAnimatorParameter()
     {
-        animator.SetInteger("Attack", gameObject.GetComponent<Equipment>().equippedWeapon.gameObject.GetComponent<Weapon>().attackAnimationToPlay);
+        Equipment  equipment =  gameObject.GetComponent<Equipment>();
+
+        if (equipment != null) // if we have an equipment component
+        {
+            GameObject wep = equipment.equippedWeapon.gameObject;
+
+            if (wep != null) // if there is a weapon equipped
+            {
+                animator.SetInteger("Attack", wep.GetComponent<Weapon>().attackAnimationToPlay);
+                // set the attack animation number
+            }
+        }
     }
     public void ForceIdle()
     {
