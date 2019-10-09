@@ -59,7 +59,7 @@ public class PlayerAttackBehavior : StateMachineBehaviour
 
     private void createProjectile(Animator animator)
     {
-        if (getEquipedWeapon(animator).Projectile != null)
+        if (getEquipedWeapon(animator) != null &&  getEquipedWeapon(animator).isProjectileWeapon)
         {
             GameObject projSample = getEquipedWeapon(animator).Projectile; // get the projectile to create
 

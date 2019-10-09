@@ -53,7 +53,7 @@ public class Weapon : MonoBehaviour
     } 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.tag.Equals("Enemy"))
+        if (other.tag.Equals("Enemy") && other.TryGetComponent<Health>(out Health component))
         {
             Health enemyHealth = other.gameObject.GetComponent<Health>(); // get the health component
             enemyHealth.damageHealth(Power); // call the damage function inb the health script
@@ -62,7 +62,7 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other) 
     {
-        if (other.tag.Equals("Enemy") && Input.GetButtonDown("Fire1"))
+        if (other.tag.Equals("Enemy") && Input.GetButtonDown("Fire1") && other.TryGetComponent<Health>(out Health component))
         {
             Health enemyHealth = other.gameObject.GetComponent<Health>();
             enemyHealth.damageHealth(Power);

@@ -69,7 +69,7 @@ public class PlayerAnimController : MonoBehaviour
 
             if (wep != null) // if there is a weapon equipped
             {
-                animator.SetInteger("Attack", wep.GetComponent<Weapon>().attackAnimationToPlay);
+                animator.SetFloat("Attack", wep.GetComponent<Weapon>().attackAnimationToPlay);
                 // set the attack animation number
             }
         }

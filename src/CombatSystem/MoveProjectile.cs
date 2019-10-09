@@ -13,7 +13,10 @@ public class MoveProjectile : MonoBehaviour
     void Start()
     {
         Animator animator = gameObject.GetComponent<Animator>(); // to setup animations
-        setAnimatorVariables(animator);
+        if (animator != null)
+        {
+            setAnimatorVariables(animator);
+        }
     }
     // Update is called once per frame
     void Update()
