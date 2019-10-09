@@ -58,7 +58,7 @@ public class PlayerAnimController : MonoBehaviour
 
     public void SetWeaponAnimatorParameter()
     {
-        animator.SetInteger("Attack", gameObject.GetComponentInChildren<Weapon>().attackAnimationToPlay);
+        animator.SetInteger("Attack", gameObject.GetComponent<Equipment>().equippedWeapon.gameObject.GetComponent<Weapon>().attackAnimationToPlay);
     }
     public void ForceIdle()
     {
