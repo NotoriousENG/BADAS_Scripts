@@ -29,6 +29,9 @@ public class PlayerAnimController : MonoBehaviour
          * (tutorial) : https://www.youtube.com/watch?v=32VXj5BB7wU
          */
 
+         // For Animim controller (legacy support)
+         animator.SetFloat("moveHorizontal",Input.GetAxis("Horizontal"));
+         animator.SetFloat("moveVertical", Input.GetAxis("Vertical"));
         /* 
          * get magnitude of movement 
          * (Hypotenuse:  x^2 + y^2 = h^2) 
