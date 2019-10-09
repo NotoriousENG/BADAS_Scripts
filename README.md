@@ -5,6 +5,7 @@ Free and open-source code for game development for all of you BADAS's out there!
 
 ## Simple (Good for individual scripts)
 Click on the script you would like, right click on the raw button, press Save As
+(You can also download everything as a Zip File)
 
 ## Git (Good for fast updates on all scripts)
 1) Install Git: https://git-scm.com/downloads
