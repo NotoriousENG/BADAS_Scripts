@@ -17,6 +17,7 @@ public class Weapon : MonoBehaviour
     public Vector3 HandleOffset;
     // weapon types : swing/stab/projectile
 
+    public int attackAnimationToPlay = 0;
     public bool isProjectileWeapon;
 
     [HideInInspector] // HideInInspector makes sure the default inspector won't show these fields.

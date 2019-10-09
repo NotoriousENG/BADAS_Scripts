@@ -34,6 +34,7 @@ public class PlayerAnimController : MonoBehaviour
          * (Hypotenuse:  x^2 + y^2 = h^2) 
          * there probably is a built that does the same job
          */
+        
         animator.SetFloat("moveMagnitude", Mathf.Sqrt(Mathf.Pow(Input.GetAxis("Horizontal"), 2) + Mathf.Pow(Input.GetAxis("Vertical"), 2))); 
 
         if (Input.GetButtonDown("Jump"))
@@ -46,6 +47,8 @@ public class PlayerAnimController : MonoBehaviour
             animator.SetBool("isAttacking", true); // set to false in PlayerAttackBehaviour
         }
 
+        SetWeaponAnimatorParameter();
+
         /* 
          * all other functions, movement, jumping, attacking, etc. 
          * can be called from the animator
@@ -53,6 +56,10 @@ public class PlayerAnimController : MonoBehaviour
          */
     }
 
+    public void SetWeaponAnimatorParameter()
+    {
+        animator.SetInteger("Attack", gameObject.GetComponentInChildren<Weapon>().attackAnimationToPlay);
+    }
     public void ForceIdle()
     {
         animator.SetFloat("lastHorizontal", 0);
