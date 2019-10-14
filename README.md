@@ -31,7 +31,7 @@ https://www.youtube.com/watch?v=CnN7L-5ygoc
 ## Dialogue System
 https://www.youtube.com/watch?v=SuuO_qMiNCw&feature=youtu.be
 ## Weapon System
-**Coming Soon**
+https://www.youtube.com/watch?v=ihBBz4PkKzw&list=PLqzDlUNiQomvrUTMh_PaGEC1z0rONWtDc
 
 # Usage
 ## PlayerAnimController
@@ -47,4 +47,4 @@ A Dialogue Trigger can be an NPC, a sign, an event, anything really. For right n
 ## Writing Dialogue Files
 Dialogue Files can be written with your favorite text editor. I used .txt but you can use any of these: https://docs.unity3d.com/Manual/class-TextAsset.html. I like to denote a new dialogue portion with an extra newline. Additionally, you can set the name for a line of dialogue by writing [NAME=TheNameYouWant] at the beginning of a line of text. This name will remain until you finish the dialogue or change it.
 ## Weapons and Projectiles
-**Coming Soon**
+More Complicated, see tutorial video above.
