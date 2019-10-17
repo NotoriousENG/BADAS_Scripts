@@ -41,6 +41,7 @@ public class Weapon : MonoBehaviour
             
             // we need to put the weapon behind the character when they are facing left or up 
             // (Assuming your characters are all right handed)
+            Debug.Log(lastDirs);
             if (lastDirs.x < 0 || lastDirs.y > 0 && !(lastDirs.y < 0 || lastDirs.x > 0))
             {
                 spriteRenderer.sortingLayerName = "BelowCharacters";
