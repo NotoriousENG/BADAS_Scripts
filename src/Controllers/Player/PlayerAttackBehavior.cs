@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*  #if UNITY_EDITOR
+ using UnityEditor;
+ #endif */
+
 public class PlayerAttackBehavior : StateMachineBehaviour
 {
+    public bool useLiteMode;
+    private float attackRadius;
+    private GameObject ColliderObject;
     private AudioSource audio;
     private float defaultSpeed;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -13,7 +20,7 @@ public class PlayerAttackBehavior : StateMachineBehaviour
         audio.Play(); // play a sound to signify attacks
         Weapon weapon = getEquipedWeapon(animator);
         defaultSpeed = animator.speed;
-        if (weapon != null && weapon.Speed > 0)
+        if (weapon != null && weapon.Speed > 0 && !useLiteMode)
         {
             animator.SetFloat("attackMultiplier", weapon.Speed); // change attack speed to weapon speed
         }
@@ -22,6 +29,14 @@ public class PlayerAttackBehavior : StateMachineBehaviour
             animator.SetFloat("attackMultiplier", 1f); // default speed
         }
         createProjectile(animator);
+
+        if (useLiteMode)
+        {
+            ColliderObject = weapon.gameObject;
+            attackRadius = weapon.attackRadius;
+            ColliderObject.transform.localPosition = getColliderPos(animator); // set the pos of the collider
+            ColliderObject.SetActive(true); // turn on the collider
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -33,6 +48,10 @@ public class PlayerAttackBehavior : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.speed = defaultSpeed; // return animator speed to default
+        if (useLiteMode)
+        {
+            ColliderObject.SetActive(false); // turn off the collider
+        }
     }
 
     private Weapon getEquipedWeapon(Animator animator)
@@ -43,7 +62,17 @@ public class PlayerAttackBehavior : StateMachineBehaviour
          *      |-> Hand
          *          |-> Weapon
          */
-        Transform hand = animator.gameObject.transform.Find("Hand");
+        
+        Transform hand = null;
+        if (useLiteMode)
+        {
+            hand = animator.gameObject.transform; // the hand is the gameObject
+        }
+        else 
+        {
+            hand = animator.gameObject.transform.Find("Hand"); // the hand is a child of the gameObject
+        }
+        
         for (int i = 0; i < hand.childCount; i++)
         {
 
@@ -86,4 +115,38 @@ public class PlayerAttackBehavior : StateMachineBehaviour
 
         }
     }
+    private Vector3 getColliderPos(Animator animator)
+    {
+        Vector2 dirs = new Vector2 (animator.GetFloat("lastHorizontal"), animator.GetFloat("lastVertical"));
+        if (dirs.x != 0) // don't divide by zero lol
+        {
+            dirs.x = dirs.x / Mathf.Abs(dirs.x); // get direction faacing i.e. (-1,0) is left
+        }
+        if (dirs.y != 0)
+        {
+            dirs.y = dirs.y / Mathf.Abs(dirs.y);
+        }
+        
+        return dirs * attackRadius; // get the position of the collider as a Vector3
+    }
+
 }
+
+/* #if UNITY_EDITOR
+[CustomEditor(typeof(PlayerAttackBehavior))] // allow the player to add a projectile if this is a projectile weapon
+public class This_Script_Editor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector(); // for other non-HideInInspector fields
+
+        PlayerAttackBehavior script = (PlayerAttackBehavior)target;
+
+        if (script.useLiteMode)
+        {
+            script.ColliderObject = EditorGUILayout.ObjectField("ColliderObject", script.ColliderObject, typeof(GameObject), true) as GameObject;
+            script.attackRadius = EditorGUILayout.FloatField("attackRadius", 1);
+        }
+    }
+}
+#endif */

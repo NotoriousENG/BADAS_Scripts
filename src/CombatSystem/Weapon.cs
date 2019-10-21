@@ -5,18 +5,21 @@ using UnityEngine;
  #if UNITY_EDITOR
  using UnityEditor;
  #endif
-
-public enum WeaponClass
-{
-    Swing, Shoot, Spin
-}
 public class Weapon : MonoBehaviour
 {
+    public bool useLiteMode;
+
+    [HideInInspector]
     public float Speed = 1; // {get;set;}
     public float Power = 1; // {get;set;}
+    [HideInInspector]
+    public float attackRadius;
+    
+    [HideInInspector]
     public Vector3 HandleOffset;
     // weapon types : swing/stab/projectile
 
+    [HideInInspector]
     public int attackAnimationToPlay = 0;
     public bool isProjectileWeapon;
 
@@ -36,11 +39,16 @@ public class Weapon : MonoBehaviour
         transform.localPosition = HandleOffset; // uncomment this for debugging, figure out your offset
         if (transform.parent.gameObject.tag.Equals("Hand"))
         {
-            Animator parentAnimator = transform.parent.parent.gameObject.GetComponent<Animator>();
+            Animator parentAnimator = transform.parent.gameObject.GetComponent<Animator>();
+            if (!useLiteMode)
+            {
+                parentAnimator = transform.parent.parent.gameObject.GetComponent<Animator>();
+            }
             Vector2 lastDirs = new Vector2 (parentAnimator.GetFloat("lastHorizontal"), parentAnimator.GetFloat("lastVertical"));
             
             // we need to put the weapon behind the character when they are facing left or up 
             // (Assuming your characters are all right handed)
+            Debug.Log(lastDirs);
             if (lastDirs.x < 0 || lastDirs.y > 0 && !(lastDirs.y < 0 || lastDirs.x > 0))
             {
                 spriteRenderer.sortingLayerName = "BelowCharacters";
@@ -49,6 +57,10 @@ public class Weapon : MonoBehaviour
             {
                 spriteRenderer.sortingLayerName = "AboveCharacters";
             }
+        }
+        if (useLiteMode && transform.parent.gameObject.tag.Equals("Player"))
+        {
+            
         }
     } 
     private void OnTriggerEnter2D(Collider2D other) 
@@ -60,14 +72,14 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other) 
+    /* private void OnTriggerStay2D(Collider2D other) 
     {
         if (other.tag.Equals("Enemy") && Input.GetButtonDown("Fire1") && other.TryGetComponent<Health>(out Health component))
         {
             Health enemyHealth = other.gameObject.GetComponent<Health>();
             enemyHealth.damageHealth(Power);
         }
-    }
+    } */
 }
 
  #if UNITY_EDITOR
@@ -83,6 +95,16 @@ public class Weapon : MonoBehaviour
          if (script.isProjectileWeapon) // if bool is true, show other fields
          {
              script.Projectile = EditorGUILayout.ObjectField("Projectile", script.Projectile, typeof(GameObject), true) as GameObject;
+         }
+         if (!script.useLiteMode)
+         {
+             script.Speed = EditorGUILayout.FloatField("Speed", 1);
+             script.HandleOffset = EditorGUILayout.Vector3Field("HandleOffset", new Vector3 (0,0,0));
+             script.attackAnimationToPlay = EditorGUILayout.IntField("attackAnimationToPlay", 0);
+         }
+         else if (script.useLiteMode)
+         {
+             script.attackRadius = EditorGUILayout.FloatField("attackRadius", 1);
          }
      }
  }

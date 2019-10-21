@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MoveProjectile : MonoBehaviour
 {
+    public bool useLiteMode;
     public Vector3 MoveDir; // the direction to move towards e.g. (-1,0,0) is left
     public float speed = 1; // the speed of movement
     public float Power = 1; // the power of the projectile
@@ -16,6 +17,16 @@ public class MoveProjectile : MonoBehaviour
         if (animator != null)
         {
             setAnimatorVariables(animator);
+        }
+        if (useLiteMode)
+        {
+            float Angle = Vector2.Angle(Vector2.up, new Vector2 (MoveDir.x, MoveDir.y) );
+            Debug.Log("Angle: " + Angle);
+            if (MoveDir.x >=0)
+            {
+                Angle *= -1;
+            }
+            transform.Rotate(0,0, Angle, Space.Self);
         }
     }
     // Update is called once per frame
