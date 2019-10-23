@@ -19,14 +19,6 @@ public class EnemyChaseBehaviour : StateMachineBehaviour
         float step = speed * Time.deltaTime;
         enemyPos.position = Vector2.MoveTowards(enemyPos.transform.position, playerPos.position, step);
 
-        if (Input.GetButtonDown("Jump"))
-        {
-            animator.SetBool("isFollowing", false);
-        }
-        else if (Input.GetButtonDown("Fire1"))
-        {
-            animator.SetBool("isPatrolling", true);
-        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
