@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour
     public float Speed = 1; // {get;set;}
     public float Power = 1; // {get;set;}
     [HideInInspector]
-    public float attackRadius;
+    public float attackOffset;
     
     [HideInInspector]
     public Vector3 HandleOffset;
@@ -104,7 +104,7 @@ public class Weapon : MonoBehaviour
          }
          else if (script.useLiteMode)
          {
-             script.attackRadius = EditorGUILayout.FloatField("attackRadius", 1);
+             script.attackOffset = EditorGUILayout.FloatField("attackOffset", 1);
          }
      }
  }
