@@ -7,7 +7,7 @@ public class EnemyAnimController : MonoBehaviour
     private GameObject player;
     private bool isVisible;
     private Animator animator;
-    public float visionRadius = 10;
+    public float visionRadius = 0;
     private float distance = -1;
     // Start is called before the first frame update
     void Start()
