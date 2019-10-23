@@ -37,6 +37,15 @@ public class PlayerAnimController : MonoBehaviour
          * (Hypotenuse:  x^2 + y^2 = h^2) 
          * there probably is a built that does the same job
          */
+
+        Vector3 inputVector = new Vector3( (Input.GetAxis("Horizontal")) , (Input.GetAxis("Vertical")), 0).normalized ;
+
+        if (inputVector != new Vector3 (0,0,0)) // while we are still moving store the inputs for later use to get facing behaviour
+        {
+            // changed to lastH and lastV to blend more cleanly to Idle
+            animator.SetFloat("lastHorizontal", inputVector.x);
+            animator.SetFloat("lastVertical", inputVector.y);
+        }
         
         animator.SetFloat("moveMagnitude", Mathf.Sqrt(Mathf.Pow(Input.GetAxis("Horizontal"), 2) + Mathf.Pow(Input.GetAxis("Vertical"), 2))); 
 
