@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/*  #if UNITY_EDITOR
- using UnityEditor;
- #endif */
-
 public class PlayerAttackBehavior : StateMachineBehaviour
 {
     public bool useLiteMode;
-    private float attackRadius;
+    public bool useMouse;
+    private float attackOffset;
     private GameObject ColliderObject;
     private AudioSource audio;
     private float defaultSpeed;
@@ -33,7 +30,7 @@ public class PlayerAttackBehavior : StateMachineBehaviour
         if (useLiteMode)
         {
             ColliderObject = weapon.gameObject;
-            attackRadius = weapon.attackRadius;
+            attackOffset = weapon.attackOffset;
             ColliderObject.transform.localPosition = getColliderPos(animator); // set the pos of the collider
             ColliderObject.SetActive(true); // turn on the collider
         }
@@ -90,10 +87,8 @@ public class PlayerAttackBehavior : StateMachineBehaviour
     {
         if (getEquipedWeapon(animator) != null &&  getEquipedWeapon(animator).isProjectileWeapon)
         {
+            Vector3 dir; // create dir variable
             GameObject projSample = getEquipedWeapon(animator).Projectile; // get the projectile to create
-
-            /* **IF YOU ARE NOT USING THE MOUSE USE THIS** */
-            Vector3 dir = new Vector3(animator.GetFloat("lastHorizontal"), animator.GetFloat("lastVertical"), 0); // get the direction to send the projectile into if you are not using the mouse
 
             GameObject proj = Instantiate<GameObject>(projSample) as GameObject; // create a new instance of the projectile (A copy/new bullet)
             proj.transform.position = animator.gameObject.transform.position; // set the origin position to the player's position
@@ -101,11 +96,18 @@ public class PlayerAttackBehavior : StateMachineBehaviour
 
             MoveProjectile moveProjectile = proj.GetComponent<MoveProjectile>(); // get ready to setup the movement behaviour
 
-            /*  **IF YOU ARE USING THE MOUSE USE THIS** 
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(animator.gameObject.transform.position); // take into account the camera space if you are using the mouse
-            dir = (Input.mousePosition - screenPos).normalized;
-            */
-
+            /*  **IF YOU ARE USING THE MOUSE THIS SETS THE DIR VALUES*/
+            if (useMouse)
+            {
+                Vector3 screenPos = Camera.main.WorldToScreenPoint(animator.gameObject.transform.position); // take into account the camera space if you are using the mouse
+                dir = (Input.mousePosition - screenPos).normalized;
+            }
+            /* **IF YOU ARE NOT USING THE MOUSE THIS SETS THE DIR VALUES */
+            else 
+            {
+                dir = new Vector3(animator.GetFloat("lastHorizontal"), animator.GetFloat("lastVertical"), 0); // get the direction to send the projectile into if you are not using the mouse
+            }
+            
             if (dir == new Vector3(0,0,0))
             {
                 dir = new Vector3 (0,-1,0); // default to shooting down
@@ -127,26 +129,8 @@ public class PlayerAttackBehavior : StateMachineBehaviour
             dirs.y = dirs.y / Mathf.Abs(dirs.y);
         }
         
-        return dirs * attackRadius; // get the position of the collider as a Vector3
+        return dirs * attackOffset; // get the position of the collider as a Vector3
     }
 
 }
 
-/* #if UNITY_EDITOR
-[CustomEditor(typeof(PlayerAttackBehavior))] // allow the player to add a projectile if this is a projectile weapon
-public class This_Script_Editor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector(); // for other non-HideInInspector fields
-
-        PlayerAttackBehavior script = (PlayerAttackBehavior)target;
-
-        if (script.useLiteMode)
-        {
-            script.ColliderObject = EditorGUILayout.ObjectField("ColliderObject", script.ColliderObject, typeof(GameObject), true) as GameObject;
-            script.attackRadius = EditorGUILayout.FloatField("attackRadius", 1);
-        }
-    }
-}
-#endif */
