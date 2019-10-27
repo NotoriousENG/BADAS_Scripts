@@ -13,7 +13,14 @@ public class EnemyIdleBehaviour : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        if (Input.GetButtonDown("Jump"))
+        {
+            animator.SetBool("isFollowing", true);
+        }
+        else if (Input.GetButtonDown("Fire1"))
+        {
+            animator.SetBool("isPatrolling", true);
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

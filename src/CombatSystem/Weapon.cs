@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour
     public float Speed = 1; // {get;set;}
     public float Power = 1; // {get;set;}
     [HideInInspector]
-    public float attackOffset;
+    public float attackRadius;
     
     [HideInInspector]
     public Vector3 HandleOffset;
@@ -98,13 +98,13 @@ public class Weapon : MonoBehaviour
          }
          if (!script.useLiteMode)
          {
-             script.Speed = EditorGUILayout.FloatField("Speed", 1);
-             script.HandleOffset = EditorGUILayout.Vector3Field("HandleOffset", new Vector3 (0,0,0));
-             script.attackAnimationToPlay = EditorGUILayout.IntField("attackAnimationToPlay", 0);
+             script.Speed = EditorGUILayout.FloatField("Speed", script.Speed);
+             script.HandleOffset = EditorGUILayout.Vector3Field("HandleOffset", script.HandleOffset);
+             script.attackAnimationToPlay = EditorGUILayout.IntField("attackAnimationToPlay", script.attackAnimationToPlay);
          }
          else if (script.useLiteMode)
          {
-             script.attackOffset = EditorGUILayout.FloatField("attackOffset", 1);
+             script.attackRadius = EditorGUILayout.FloatField("attackRadius", script.attackRadius);
          }
      }
  }

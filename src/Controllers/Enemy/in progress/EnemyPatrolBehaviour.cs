@@ -41,6 +41,10 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour {
             }
         }
 
+        else if (Input.GetButtonDown("Fire1"))
+        {
+            animator.SetBool("isPatrolling", false);
+        }
     }
 
     
