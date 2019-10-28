@@ -8,6 +8,8 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public bool useLiteMode;
+    [HideInInspector]
+    public bool canKillNPCs;
 
     [HideInInspector]
     public float Speed = 1; // {get;set;}
@@ -65,7 +67,7 @@ public class Weapon : MonoBehaviour
     } 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.tag.Equals("Enemy") && other.TryGetComponent<Health>(out Health component))
+        if (other.tag.Equals("Enemy") && other.TryGetComponent<Health>(out Health component) || other.tag.Equals("NPC") && canKillNPCs)
         {
             Health enemyHealth = other.gameObject.GetComponent<Health>(); // get the health component
             enemyHealth.damageHealth(Power); // call the damage function inb the health script

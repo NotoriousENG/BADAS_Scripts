@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyAnimController : MonoBehaviour
 {
+    public float nakedAttackPower = 1;
+    private float waitTime;
     private GameObject player;
     private bool isVisible;
     private Animator animator;
@@ -29,6 +31,11 @@ public class EnemyAnimController : MonoBehaviour
             distance = -1;
         }
 
+        if (!animator.enabled && waitTime < Time.deltaTime)
+        {
+            EnableAnimator();
+        }
+
     }
     private void OnBecameVisible() 
     {
@@ -37,5 +44,26 @@ public class EnemyAnimController : MonoBehaviour
     private void OnBecameInvisible() 
     {
         isVisible = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            other.gameObject.GetComponent<Health>().damageHealth(nakedAttackPower);
+        }
+        else if (other.gameObject.tag.Equals("Weapon"))
+        {
+            DisableAnimator();
+            waitTime = Time.timeSinceLevelLoad + 5;
+        }
+    }
+
+    void DisableAnimator()
+    {
+        animator.enabled = false;
+    }
+    void EnableAnimator()
+    {
+        animator.enabled = true;
     }
 }

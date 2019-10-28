@@ -5,6 +5,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     public float capacity = 3f;
+    public Vector3 respawnPos;
     public float current;
 
     private Color Red = new Color(255,0,0,255);
@@ -34,7 +35,16 @@ public class Health : MonoBehaviour
 
         if (current <= 0) // health is depleted
         {
-            Kill();
+            if (gameObject.tag.Equals ("Player"))
+            {
+                current = capacity;
+                gameObject.transform.position = respawnPos;
+            }
+            else 
+            {
+                Kill();
+            }
+            
         }
         
     }
