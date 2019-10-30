@@ -5,17 +5,20 @@ using UnityEngine;
 public class EnemyAnimController : MonoBehaviour
 {
     public float nakedAttackPower = 1;
-    private float waitTime;
     private GameObject player;
-    private bool isVisible;
+    [HideInInspector]
+    public bool isVisible;
     private Animator animator;
     public float visionRadius = 0;
     private float distance = -1;
+    [HideInInspector]
+    public Vector3 StartPos;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         animator = gameObject.GetComponent<Animator>();
+        StartPos = gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -29,11 +32,6 @@ public class EnemyAnimController : MonoBehaviour
         else 
         {
             distance = -1;
-        }
-
-        if (!animator.enabled && waitTime < Time.deltaTime)
-        {
-            EnableAnimator();
         }
 
     }
@@ -50,17 +48,18 @@ public class EnemyAnimController : MonoBehaviour
         if (other.gameObject.tag.Equals("Player"))
         {
             other.gameObject.GetComponent<Health>().damageHealth(nakedAttackPower);
+            DisableAnimator();
         }
         else if (other.gameObject.tag.Equals("Weapon"))
         {
             DisableAnimator();
-            waitTime = Time.timeSinceLevelLoad + 5;
         }
     }
 
     void DisableAnimator()
     {
         animator.enabled = false;
+        Invoke("EnableAnimator", 1f);
     }
     void EnableAnimator()
     {
