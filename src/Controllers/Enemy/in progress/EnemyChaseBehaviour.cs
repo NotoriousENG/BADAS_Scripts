@@ -18,7 +18,6 @@ public class EnemyChaseBehaviour : StateMachineBehaviour
         Transform enemyPos = animator.transform;
         float step = speed * Time.deltaTime;
         enemyPos.position = Vector2.MoveTowards(enemyPos.transform.position, playerPos.position, step);
-
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

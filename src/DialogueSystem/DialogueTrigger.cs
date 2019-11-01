@@ -60,12 +60,12 @@ public class DialogueTrigger : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             TriggerDialogue();
-            Debug.Log("Collision");
+            // Debug.Log("Collision");
         }
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other.name);
+        // Debug.Log(other.name);
         if (other.gameObject.tag == "Player" && Input.GetButton("Jump") && nextTime < Time.timeSinceLevelLoad)
         {
             nextTime = Time.timeSinceLevelLoad + waitTime;
