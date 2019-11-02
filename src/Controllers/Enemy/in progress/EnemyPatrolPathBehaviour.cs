@@ -30,37 +30,6 @@ public class EnemyPatrolPathBehaviour : StateMachineBehaviour
     {
         navigate();
     }
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
-
-    private void OnDrawGizmos() 
-    {
-        Gizmos.color = Color.blue;
-
-        for (int i = 0; i < PathNodes.Count - 1; i++)
-        {
-            Transform curr = PathNodes[i];
-            Transform next = PathNodes[i + 1];
-
-            Gizmos.DrawLine(curr.position, next.position);
-        }
-    }
     
     private void setNextNode()
     {

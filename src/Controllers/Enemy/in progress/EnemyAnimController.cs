@@ -9,10 +9,10 @@ public class EnemyAnimController : MonoBehaviour
     [HideInInspector]
     public bool isVisible;
     private Animator animator;
-    public float visionRadius = 0;
+    public float respawnRadius = 0;
     private float distance = -1;
     [HideInInspector]
-    public Vector3 StartPos;
+    private Vector3 StartPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,13 +25,11 @@ public class EnemyAnimController : MonoBehaviour
     void Update()
     {
         animator.SetFloat("distance", distance); 
-        if (isVisible)
-        {
-            distance = (player.transform.position - transform.position).magnitude;
-        }
-        else 
+        distance = (player.transform.position - transform.position).magnitude;
+        if (!isVisible && distance > respawnRadius)
         {
             distance = -1;
+            animator.gameObject.transform.position = StartPos;
         }
 
     }
@@ -42,6 +40,7 @@ public class EnemyAnimController : MonoBehaviour
     private void OnBecameInvisible() 
     {
         isVisible = false;
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

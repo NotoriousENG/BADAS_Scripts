@@ -22,16 +22,6 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour {
 
         waitTime = startWaitTime;
         moveSpot.position = randPos();
-
-        EnemyAnimController animController = animator.gameObject.GetComponent<EnemyAnimController>();
-        Vector3 correctPos = animController.StartPos;
-        Vector3 currPos = animator.gameObject.transform.position;
-        bool isVis = animController.isVisible;
-
-        if (Vector3.Distance(correctPos, currPos) > radius && !isVis)
-        {
-            animator.gameObject.transform.position = correctPos;
-        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -60,24 +50,4 @@ public class EnemyPatrolBehaviour : StateMachineBehaviour {
     {
         return origin + new Vector3 (Random.Range(-1 * radius, radius), Random.Range( -1 * radius, radius), 0);
     }
-
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        
-    }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
-
-    
 }
