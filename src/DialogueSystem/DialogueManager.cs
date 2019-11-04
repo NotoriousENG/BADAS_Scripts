@@ -27,11 +27,11 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         CanvasBox.SetActive(false); // close the dialogue box on play
+        animController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimController>();
     }
 
     private void DisablePlayerController()
     {
-        animController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerAnimController>();
         animController.ForceIdle();
         animController.enabled = false;
     }
