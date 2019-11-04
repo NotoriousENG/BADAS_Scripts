@@ -15,12 +15,26 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     public TextAsset TextFileAsset; // your imported text file for your NPC
+    public bool TriggerWithButton;
+    public GameObject optionalButtonIndicator;
     private Queue<string> dialogue = new Queue<string>(); // stores the dialogue (Great Performance!)
     private float waitTime = 0.5f; // lag time for advancing dialogue so you can actually read it
     private float nextTime = 0f; // used with waitTime to create a timer system
+    private bool dialogueTiggered;
+    private GameObject indicator;
 
     // public bool useCollision; // unused for now
 
+    private void Start() 
+    {
+        if (optionalButtonIndicator != null)
+        {
+            indicator =  GameObject.Instantiate(optionalButtonIndicator);
+            indicator.transform.parent = transform;
+            indicator.transform.localPosition = new Vector3 (0,14,0);
+            indicator.SetActive(false);
+        }
+    }
     /* Called when you want to start dialogue */
     void TriggerDialogue()
     {
@@ -59,7 +73,10 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            TriggerDialogue();
+            if (!TriggerWithButton)
+            {
+                TriggerDialogue();
+            }
             // Debug.Log("Collision");
         }
     }
@@ -68,8 +85,28 @@ public class DialogueTrigger : MonoBehaviour
         // Debug.Log(other.name);
         if (other.gameObject.tag == "Player" && Input.GetButton("Jump") && nextTime < Time.timeSinceLevelLoad)
         {
+            if (!dialogueTiggered)
+            {
+                TriggerDialogue();
+                dialogueTiggered = true;
+                if (indicator != null && indicator.activeSelf == true)
+                {
+                    indicator.SetActive(false);
+                }
+            }
             nextTime = Time.timeSinceLevelLoad + waitTime;
             FindObjectOfType<DialogueManager>().AdvanceDialogue();
+        }
+        else if (other.gameObject.tag == "Player")
+        {
+            if (!dialogueTiggered)
+            {
+                // Debug.Log("Press Space");
+                if (indicator != null && indicator.activeSelf == false)
+                {
+                    indicator.SetActive(true);
+                }
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -77,6 +114,7 @@ public class DialogueTrigger : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             FindObjectOfType<DialogueManager>().EndDialogue();
+            dialogueTiggered = false;
         }
     }
 }
