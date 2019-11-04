@@ -13,6 +13,9 @@ public class Health : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private float blinkTime = .25f;
     private float waitTime = 1f;
+    private Vector2 knockback;
+    private float knockbackSpeed = 5f;
+    private bool inKnockback;
 
     private void Awake() 
     {
@@ -25,13 +28,21 @@ public class Health : MonoBehaviour
         if (spriteRenderer.color == Red &&  Time.timeSinceLevelLoad > waitTime)
         {
             spriteRenderer.color = Default;
+            inKnockback = false;
+        }
+        if (inKnockback)
+        {
+            applyKnockBack();
         }
     }
-    public void damageHealth(float damage)
+    public void damageHealth(float damage, GameObject damager)
     {
         current -= damage; // take damage (Negative Values Heal)
         spriteRenderer.color = Red; // RGBA -> Red
         waitTime = Time.timeSinceLevelLoad + blinkTime;
+
+        knockback = getKnockBack(damager.transform.position);
+        inKnockback = true;
 
         if (current <= 0) // health is depleted
         {
@@ -47,6 +58,16 @@ public class Health : MonoBehaviour
             
         }
         
+    }
+
+    private Vector2 getKnockBack(Vector2 damagerPos)
+    {
+        return ((Vector2)damagerPos - (Vector2)transform.position).normalized;
+    }
+    private void applyKnockBack()
+    {
+        // Debug.Log((Vector2)transform.position + knockback);
+        transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position - knockback, knockbackSpeed * Time.deltaTime);
     }
 
     private void Kill() // call when health is depleted

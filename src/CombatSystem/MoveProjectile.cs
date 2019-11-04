@@ -59,7 +59,7 @@ public class MoveProjectile : MonoBehaviour
         if (other.tag.Equals("Enemy"))
         {
             Health enemyHealth = other.gameObject.GetComponent<Health>();
-            enemyHealth.damageHealth(Power);
+            enemyHealth.damageHealth(Power, gameObject);
             killObj();
         }
         else if (other.gameObject != Shooter && other.gameObject.tag != "Weapon")

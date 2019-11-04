@@ -70,7 +70,7 @@ public class Weapon : MonoBehaviour
         if (other.tag.Equals("Enemy") && other.TryGetComponent<Health>(out Health component) || other.tag.Equals("NPC") && canKillNPCs)
         {
             Health enemyHealth = other.gameObject.GetComponent<Health>(); // get the health component
-            enemyHealth.damageHealth(Power); // call the damage function inb the health script
+            enemyHealth.damageHealth(Power, gameObject); // call the damage function inb the health script
         }
     }
 

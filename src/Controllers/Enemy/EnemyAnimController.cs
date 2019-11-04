@@ -53,7 +53,7 @@ public class EnemyAnimController : MonoBehaviour
         {
             if (other.gameObject.TryGetComponent<Health>(out Health component)) // if you are using my health script
             {
-                other.gameObject.GetComponent<Health>().damageHealth(nakedAttackPower); // damage the player
+                other.gameObject.GetComponent<Health>().damageHealth(nakedAttackPower, gameObject); // damage the player
             }
             DisableAnimator(); // stop moving for 1 second
         }
