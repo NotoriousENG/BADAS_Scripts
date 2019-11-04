@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPatrolBehaviour : StateMachineBehaviour {
-    public float speed;
+public class EnemyPatrolAreaBehaviour : StateMachineBehaviour {
+    public float speed = 1;
     private Vector3 origin;
     private float waitTime;
     public float startWaitTime = 1;
     private Transform moveSpot;
-    public float radius;
+    public float radius = 2;
     private Animator anim;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

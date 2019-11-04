@@ -6,10 +6,12 @@ public class EnemyChaseBehaviour : StateMachineBehaviour
 {
     private Transform playerPos;
     public float speed;
+    private Animator anim;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        anim = animator;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -18,5 +20,11 @@ public class EnemyChaseBehaviour : StateMachineBehaviour
         Transform enemyPos = animator.transform;
         float step = speed * Time.deltaTime;
         enemyPos.position = Vector2.MoveTowards(enemyPos.transform.position, playerPos.position, step);
+    }
+
+    private void OnTriggerStay2D(Collider2D other) 
+    {
+        Vector2 lineToObject = (anim.transform.position - other.transform.position).normalized;
+        anim.transform.position = Vector2.MoveTowards(anim.transform.position, -1 * lineToObject, speed * Time.deltaTime);
     }
 }
