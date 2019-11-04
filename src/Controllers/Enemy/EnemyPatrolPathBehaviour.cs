@@ -33,39 +33,34 @@ public class EnemyPatrolPathBehaviour : StateMachineBehaviour
     
     private void setNextNode()
     {
-        if (i < PathNodes.Count && !inReverse) // if we are within bounds and going forwards
+        nextPos = PathNodes[i]; // set the next position
+        if (i < PathNodes.Count - 1) // if we are within bounds and going forwards
         {
-            nextPos = PathNodes[i]; // set the next position
-            i++; // increment the iterator for the next time this function is called
-        }
-        else if (isLoop) // if this is a closed loop
-        {
-            i = 0;
-            nextPos = PathNodes[i]; // set the nextPos to the start position and get ready to loop again
-            i++;
-        }
-        else if (!isLoop && i != 0) // if this is not a closed loop
-        {
-            i -= 2;
-            nextPos = PathNodes[i]; // set the nextPos to the previously visited position
-            i--; // go backwards through the list
-            inReverse = true; // we are now reversing
-        }
-        else if (inReverse) // if we are traveling backwards
-        {
-            nextPos = PathNodes[i]; // set the nextPos
-            i--; // get ready to load in the next value
-            if (i < 0) // if we are at the begining
+            if (!inReverse)
             {
-                i = 0; 
-                inReverse = false; // we no longer want to reverse
+                i++; // increment the iterator for the next time this function is called
+            }
+            else 
+            {
+                i--; // decrement the iterator for the next time this function is called
+                if (i == 0)
+                {
+                    inReverse = false;
+                }
             }
         }
         else
         {
-            Debug.Log("Load Error"); // this will never happen, if it does, something is terribly wrong
+            if (isLoop)
+            {
+                i = 0;
+            }
+            else 
+            {
+                inReverse = true;
+                i --;
+            }
         }
-        
     }
 
     private void navigate()
