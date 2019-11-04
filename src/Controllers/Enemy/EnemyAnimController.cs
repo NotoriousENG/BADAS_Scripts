@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAnimController : MonoBehaviour
 {
-    public float nakedAttackPower = 1;
+    public float nakedAttackPower = 1; // the damage dealt on collision
     private GameObject player;
     [HideInInspector]
     public bool isVisible;
@@ -16,49 +16,57 @@ public class EnemyAnimController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        animator = gameObject.GetComponent<Animator>();
-        StartPos = gameObject.transform.position;
+        player = GameObject.FindGameObjectWithTag("Player"); // load in the player
+        animator = gameObject.GetComponent<Animator>(); // load in the attatched animator
+        StartPos = gameObject.transform.position; // store the original position of this gameObject
     }
 
     // Update is called once per frame
     void Update()
     {
-        animator.SetFloat("distance", distance); 
-        distance = (player.transform.position - transform.position).magnitude;
-        if (!isVisible && distance > respawnRadius)
+        animator.SetFloat("distance", distance); // set an animator float variable for 
+        distance = (player.transform.position - transform.position).magnitude; // how far away this object is from the player
+        
+        /*
+         * if the enemy is visible (in either the main camera OR the scene camera in the editor)
+         * AND the enemy is far enough away
+         */
+        if (!isVisible && distance > respawnRadius) 
         {
-            distance = -1;
-            animator.gameObject.transform.position = StartPos;
+            distance = -1; // the enemy is very far away
+            animator.gameObject.transform.position = StartPos; // reset the enemy to it's original position
         }
 
     }
-    private void OnBecameVisible() 
+    private void OnBecameVisible() // when the gameobject is visible from the camera (or scene preview)
     {
         isVisible = true;
     }
-    private void OnBecameInvisible() 
+    private void OnBecameInvisible() // when the gameobject is invisible from the camera (and scene preview)
     {
         isVisible = false;
-        
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other) // when this object enters another trigger
+    {
         if (other.gameObject.tag.Equals("Player"))
         {
-            other.gameObject.GetComponent<Health>().damageHealth(nakedAttackPower);
-            DisableAnimator();
+            if (other.gameObject.TryGetComponent<Health>(out Health component)) // if you are using my health script
+            {
+                other.gameObject.GetComponent<Health>().damageHealth(nakedAttackPower); // damage the player
+            }
+            DisableAnimator(); // stop moving for 1 second
         }
         else if (other.gameObject.tag.Equals("Weapon"))
         {
-            DisableAnimator();
+            DisableAnimator(); // stop moving for 1 second
         }
     }
 
     void DisableAnimator()
     {
         animator.enabled = false;
-        Invoke("EnableAnimator", 1f);
+        Invoke("EnableAnimator", 1f); // Enable the animator in 1 second
     }
     void EnableAnimator()
     {

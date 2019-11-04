@@ -14,14 +14,14 @@ public class EnemyPatrolAreaBehaviour : StateMachineBehaviour {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        origin = animator.transform.position;
+        origin = animator.transform.position; // store the origin where the patrol begins
         anim = animator;
         GameObject pos = new GameObject("Pos");
         pos.transform.position = animator.transform.position;
-        moveSpot = pos.transform;
+        moveSpot = pos.transform; // moveSpot is set to a transform
 
         waitTime = startWaitTime;
-        moveSpot.position = randPos();
+        moveSpot.position = randPos(); // set to a random position
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -30,16 +30,18 @@ public class EnemyPatrolAreaBehaviour : StateMachineBehaviour {
         Transform enemyPos = animator.transform;
         float step = speed * Time.deltaTime;
 
-        enemyPos.position = Vector2.MoveTowards(enemyPos.position, moveSpot.position, step);
+        enemyPos.position = Vector2.MoveTowards(enemyPos.position, moveSpot.position, step); // move towards this position
 
-        if (Vector2.Distance(enemyPos.position, moveSpot.position) < 0.2f)
+        if (Vector2.Distance(enemyPos.position, moveSpot.position) < 0.2f) // if we have reached the position
         {
-            if (waitTime <= 0 )
+            // get a new position after idling for a bit
+            
+            if (waitTime <= 0 ) 
             {
                 moveSpot.position = randPos();
                 waitTime = startWaitTime;
             }
-            else
+            else // be idle
             {
                 waitTime -= Time.deltaTime;
             }

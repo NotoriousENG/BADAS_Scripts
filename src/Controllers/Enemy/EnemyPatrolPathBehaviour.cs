@@ -15,12 +15,12 @@ public class EnemyPatrolPathBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         thisObject = animator.gameObject;
-        Transform paths = thisObject.transform.parent.Find("Paths");
+        Transform paths = thisObject.transform.parent.Find("Paths"); // load in an empty named Paths that contains transforms
         foreach (Transform path in paths)
         {
-            PathNodes.Add(path);
+            PathNodes.Add(path); // add every path to our list
         }
-        nextPos = PathNodes[0];
+        nextPos = PathNodes[0]; // the first target is the first transform
 
         
     }
@@ -33,50 +33,50 @@ public class EnemyPatrolPathBehaviour : StateMachineBehaviour
     
     private void setNextNode()
     {
-        if (i < PathNodes.Count && !inReverse)
+        if (i < PathNodes.Count && !inReverse) // if we are within bounds and going forwards
         {
-            nextPos = PathNodes[i];
-            i++;
+            nextPos = PathNodes[i]; // set the next position
+            i++; // increment the iterator for the next time this function is called
         }
-        else if (isLoop)
+        else if (isLoop) // if this is a closed loop
         {
             i = 0;
-            nextPos = PathNodes[i];
+            nextPos = PathNodes[i]; // set the nextPos to the start position and get ready to loop again
             i++;
         }
-        else if (!isLoop && i != 0)
+        else if (!isLoop && i != 0) // if this is not a closed loop
         {
             i -= 2;
-            nextPos = PathNodes[i];
-            i--;
-            inReverse = true;
+            nextPos = PathNodes[i]; // set the nextPos to the previously visited position
+            i--; // go backwards through the list
+            inReverse = true; // we are now reversing
         }
-        else if (inReverse)
+        else if (inReverse) // if we are traveling backwards
         {
-            nextPos = PathNodes[i];
-            i--;
-            if (i < 0)
+            nextPos = PathNodes[i]; // set the nextPos
+            i--; // get ready to load in the next value
+            if (i < 0) // if we are at the begining
             {
-                i = 0;
-                inReverse = false;
+                i = 0; 
+                inReverse = false; // we no longer want to reverse
             }
         }
         else
         {
-            Debug.Log("Logic Error");
+            Debug.Log("Load Error"); // this will never happen, if it does, something is terribly wrong
         }
         
     }
 
     private void navigate()
     {
-        if(thisObject.transform.position == nextPos.position)
+        if(thisObject.transform.position == nextPos.position) // if we have reached this position
         {
-            setNextNode();
+            setNextNode(); // set the next position
         }
         
         float step = speed * Time.deltaTime;
-        thisObject.transform.position = Vector3.MoveTowards(thisObject.transform.position, nextPos.position, step);
+        thisObject.transform.position = Vector3.MoveTowards(thisObject.transform.position, nextPos.position, step); // move towards the next position
 
         
     }
