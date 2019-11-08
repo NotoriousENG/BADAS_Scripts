@@ -94,9 +94,13 @@ public class DialogueTrigger : MonoBehaviour
                 {
                     indicator.SetActive(false);
                 }
+                nextTime = Time.timeSinceLevelLoad + waitTime;
             }
-            nextTime = Time.timeSinceLevelLoad + waitTime;
-            FindObjectOfType<DialogueManager>().AdvanceDialogue();
+            else 
+            {
+                nextTime = Time.timeSinceLevelLoad + waitTime;
+                FindObjectOfType<DialogueManager>().AdvanceDialogue();
+            }
         }
         else if (other.gameObject.tag == "Player")
         {
