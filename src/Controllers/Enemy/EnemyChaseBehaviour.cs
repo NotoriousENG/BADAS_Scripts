@@ -20,6 +20,10 @@ public class EnemyChaseBehaviour : StateMachineBehaviour
         Transform enemyPos = animator.transform;
         float step = speed * Time.deltaTime;
         enemyPos.position = Vector2.MoveTowards(enemyPos.transform.position, playerPos.position, step); // move towards the player
+
+        Vector2 moveDirs = (playerPos.position - enemyPos.position).normalized;
+        EnemyAnimController animController = animator.gameObject.GetComponent<EnemyAnimController>();
+        animController.inputVector = moveDirs;
     }
 
     private void OnTriggerStay2D(Collider2D other) 

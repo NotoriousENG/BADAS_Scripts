@@ -13,6 +13,8 @@ public class EnemyAnimController : MonoBehaviour
     private float distance = -1;
     [HideInInspector]
     private Vector3 StartPos;
+    [HideInInspector]
+    public Vector2 inputVector;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,13 @@ public class EnemyAnimController : MonoBehaviour
         {
             distance = -1; // the enemy is very far away
             animator.gameObject.transform.position = StartPos; // reset the enemy to it's original position
+        }
+        
+        if (inputVector != new Vector2 (0,0)) // while we are still moving store the inputs for later use to get facing behaviour
+        {
+            // changed to lastH and lastV to blend more cleanly to Idle
+            animator.SetFloat("lastHorizontal", inputVector.x);
+            animator.SetFloat("lastVertical", inputVector.y);
         }
 
     }

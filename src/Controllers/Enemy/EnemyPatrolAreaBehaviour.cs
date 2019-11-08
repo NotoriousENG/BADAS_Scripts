@@ -30,6 +30,10 @@ public class EnemyPatrolAreaBehaviour : StateMachineBehaviour {
         Transform enemyPos = animator.transform;
         float step = speed * Time.deltaTime;
 
+        Vector2 moveDirs = (moveSpot.position - enemyPos.position).normalized;
+        EnemyAnimController animController = animator.gameObject.GetComponent<EnemyAnimController>();
+        animController.inputVector = moveDirs;
+
         enemyPos.position = Vector2.MoveTowards(enemyPos.position, moveSpot.position, step); // move towards this position
 
         if (Vector2.Distance(enemyPos.position, moveSpot.position) < 0.2f) // if we have reached the position

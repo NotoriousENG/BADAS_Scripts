@@ -11,18 +11,23 @@ public class EnemyPatrolPathBehaviour : StateMachineBehaviour
     public Transform nextPos;
     private GameObject thisObject;
     private int i;
+    private Animator anim;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         thisObject = animator.gameObject;
-        Transform paths = thisObject.transform.parent.Find("Paths"); // load in an empty named Paths that contains transforms
-        foreach (Transform path in paths)
+        if (PathNodes.Count ==0)
         {
-            PathNodes.Add(path); // add every path to our list
+            Transform paths = thisObject.transform.parent.Find("Paths"); // load in an empty named Paths that contains transforms
+            foreach (Transform path in paths)
+            {
+                PathNodes.Add(path); // add every path to our list
+            }
         }
+        
         nextPos = PathNodes[0]; // the first target is the first transform
 
-        
+        anim = animator;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -65,8 +70,15 @@ public class EnemyPatrolPathBehaviour : StateMachineBehaviour
 
     private void navigate()
     {
-        if(thisObject.transform.position == nextPos.position) // if we have reached this position
+        Vector2 dist = nextPos.position - thisObject.transform.position;
+        dist.x = Mathf.Abs(dist.x);
+        dist.y = Mathf.Abs(dist.y);
+
+        Vector2 close = new Vector2 (0.1f,0.1f);
+
+        if(dist.x < close.x && dist.y < close.y) // if we have reached this position
         {
+            // Debug.Log("Made it");
             setNextNode(); // set the next position
         }
         
@@ -74,5 +86,9 @@ public class EnemyPatrolPathBehaviour : StateMachineBehaviour
         thisObject.transform.position = Vector3.MoveTowards(thisObject.transform.position, nextPos.position, step); // move towards the next position
 
         
+        Vector2 moveDirs = (nextPos.position - thisObject.transform.position).normalized;
+        EnemyAnimController animController = anim.gameObject.GetComponent<EnemyAnimController>();
+        animController.inputVector = moveDirs;
+        // Debug.Log(moveDirs);
     }
 }
