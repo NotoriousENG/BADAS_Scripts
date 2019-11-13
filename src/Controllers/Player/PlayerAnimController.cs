@@ -12,6 +12,7 @@ public class PlayerAnimController : MonoBehaviour
      * of course, you can do whatever you'd like (:
      */
     private Animator animator;
+    public bool isSideScroller;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +32,14 @@ public class PlayerAnimController : MonoBehaviour
 
          // For Animim controller (legacy support)
          animator.SetFloat("moveHorizontal",Input.GetAxis("Horizontal"));
-         animator.SetFloat("moveVertical", Input.GetAxis("Vertical"));
+         if (!isSideScroller)
+         {
+             animator.SetFloat("moveVertical", Input.GetAxis("Vertical"));
+         }
+         else
+         {
+             animator.SetFloat("moveVertical", 0);
+         }
         /* 
          * get magnitude of movement 
          * (Hypotenuse:  x^2 + y^2 = h^2) 

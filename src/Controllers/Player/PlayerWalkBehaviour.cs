@@ -14,6 +14,7 @@ public class PlayerWalkBehaviour : StateMachineBehaviour
     public float speed = 3.5f;
     private Transform playerTransform;
     private Rigidbody2D rigidbody;
+    public bool isSideScroller;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -30,7 +31,10 @@ public class PlayerWalkBehaviour : StateMachineBehaviour
          * store the player input and scale it for use in the below movement (transform.translate function) 
          * normalized makes sure that walking diagonaly is not faster than moving horizontally or vertically
          */
-        Vector3 inputVector = new Vector3( (Input.GetAxis("Horizontal")) , (Input.GetAxis("Vertical")), 0).normalized ;
+        Vector3 inputVector = Vector3.zero;
+        
+        inputVector = new Vector3( (Input.GetAxis("Horizontal")) , (Input.GetAxis("Vertical")), 0).normalized ;
+        
 
         if (inputVector != new Vector3 (0,0,0)) // while we are still moving store the inputs for later use to get facing behaviour
         {
@@ -39,6 +43,10 @@ public class PlayerWalkBehaviour : StateMachineBehaviour
             animator.SetFloat("lastVertical", inputVector.y);
         }
 
+        if (isSideScroller)
+        {
+            inputVector.y = 0;
+        }
         playerTransform.Translate(inputVector * scaledSpeed); // moves the transform in the direction set above
     }
 
