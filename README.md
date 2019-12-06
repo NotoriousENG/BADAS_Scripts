@@ -33,6 +33,8 @@ https://www.youtube.com/watch?v=CnN7L-5ygoc
 https://www.youtube.com/watch?v=SuuO_qMiNCw&feature=youtu.be
 ## Weapon System
 https://www.youtube.com/watch?v=ihBBz4PkKzw&list=PLqzDlUNiQomvrUTMh_PaGEC1z0rONWtDc
+## Lite Weapon System
+https://www.youtube.com/watch?v=2g5mTXn7Cic
 ## Enemy AI
 https://www.youtube.com/watch?v=ihAw8O6dEu4&feature=youtu.be
 
