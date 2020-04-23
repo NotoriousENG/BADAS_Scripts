@@ -70,7 +70,7 @@ More Complicated, see tutorial video above.
 * set the respawnRange (how far away from the player before the enemy gives up)
 * make sure the animator has a parameter called "distance" of type float
 * set up transitions between your states
-### 3D Package
+## 3D Package
 * This package is aimed for more experienced developers who would like to kickstart 3d development
 * There's not as much documentation for the scripts, but importing the package will leave you with a working scene with multiple features.
 * includes 3D controls, running, jumping, attacking, simple camera system, combat system, moving platforms, a sample UI and more
