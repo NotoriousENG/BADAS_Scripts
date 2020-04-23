@@ -6,6 +6,7 @@ Free and open-source code for game development for all of you BADAS's out there!
 ## Simple (Good for individual scripts)
 Click on the script you would like, right click on the raw button, press Save As
 (You can also download everything as a Zip File)
+Be careful some scripts depend on eachother, if something doesn't work, I recommend downloading everything as a zip file.
 
 ## Git (Good for fast updates on all scripts)
 1) Install Git: https://git-scm.com/downloads
@@ -69,3 +70,7 @@ More Complicated, see tutorial video above.
 * set the respawnRange (how far away from the player before the enemy gives up)
 * make sure the animator has a parameter called "distance" of type float
 * set up transitions between your states
+### 3D Package
+* This package is aimed for more experienced developers who would like to kickstart 3d development
+* There's not as much documentation for the scripts, but importing the package will leave you with a working scene with multiple features.
+* includes 3D controls, running, jumping, attacking, simple camera system, combat system, moving platforms, a sample UI and more
