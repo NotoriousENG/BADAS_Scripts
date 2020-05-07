@@ -74,3 +74,8 @@ More Complicated, see tutorial video above.
 * This package is aimed for more experienced developers who would like to kickstart 3d development
 * There's not as much documentation for the scripts, but importing the package will leave you with a working scene with multiple features.
 * includes 3D controls, running, jumping, attacking, simple camera system, combat system, moving platforms, a sample UI and more
+* Assets -> ImportPackage -> CustomPackage
+* You may need to add the following to your project settings to get this to work
+![Alt text](tut0.png?raw=true "Title")
+![Alt text](tut1.png?raw=true "Title")
+![Alt text](tut2.png?raw=true "Title")
