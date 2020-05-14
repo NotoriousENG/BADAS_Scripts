@@ -61,7 +61,7 @@ public class DialogueManager : MonoBehaviour
 
     private void PrintDialogue()
     {
-        if (inputStream.Peek().Contains("EndQueue")) // special phrase to stop dialogue
+        if (inputStream.Count == 0 || inputStream.Peek().Contains("EndQueue")) // special phrase to stop dialogue
         {
             inputStream.Dequeue(); // Clear Queue
             EndDialogue();

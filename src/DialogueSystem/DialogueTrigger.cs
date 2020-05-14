@@ -16,26 +16,16 @@ public class DialogueTrigger : MonoBehaviour
 {
     public TextAsset TextFileAsset; // your imported text file for your NPC
     public bool TriggerWithButton;
-    public GameObject optionalButtonIndicator;
-    public Vector3 optionalIndicatorOffset = new Vector3 (0,0,0);
+    public GameObject indicator;
+    // public Vector3 optionalIndicatorOffset = new Vector3 (0,0,0);
     private Queue<string> dialogue = new Queue<string>(); // stores the dialogue (Great Performance!)
     private float waitTime = 0.5f; // lag time for advancing dialogue so you can actually read it
     private float nextTime = 0f; // used with waitTime to create a timer system
     private bool dialogueTiggered;
-    private GameObject indicator;
+    //private GameObject indicator;
 
     // public bool useCollision; // unused for now
 
-    private void Start() 
-    {
-        if (optionalButtonIndicator != null)
-        {
-            indicator =  GameObject.Instantiate(optionalButtonIndicator);
-            indicator.transform.parent = transform;
-            indicator.transform.localPosition = optionalIndicatorOffset;
-            indicator.SetActive(false);
-        }
-    }
     /* Called when you want to start dialogue */
     void TriggerDialogue()
     {
